@@ -114,11 +114,42 @@
             },
         });
 
+
         $.getJSON("wfsgeoserver1.php", function (data) {
             wfsgeoserver1.addData(data);
-            wfsgeoserver1.addTo(map);
+            map.addLayer(wfsgeoserver1);
             map.fitBounds(wfsgeoserver1.getBounds());
-        });
+        
+            // Style and Popup handling
+            wfsgeoserver1.eachLayer(function (layer) {
+                var aktif = layer.feature.properties.aktif;
+
+                // Apply styling based on aktif property
+                if (aktif > 94 && aktif <= 295) {
+                    layer.setStyle({
+                        fillColor: '#ffd0bb',
+                        fillOpacity: 1,
+                        weight: 1
+                    });
+                } else if (aktif > 296 && aktif <= 530) {
+                    layer.setStyle({
+                        fillColor: '#ff7f50',
+                        color: '#232323',
+                        fillOpacity: 1,
+                        weight: 1
+                    });
+                } else if (aktif > 531 && aktif <= 941) {
+                    layer.setStyle({
+                        fillColor: '#b22222',
+                        color: '#232323',
+                        fillOpacity: 1,
+                        weight: 1
+                    });
+                }
+
+            });
+        })
+
         // Inisialisasi Peta
         var map = L.map("map").setView([-7.7956, 110.3695], 10);
 
@@ -131,7 +162,7 @@
         };
         title.update = function () {
             this._div.innerHTML =
-                "<h2>LATIHAN WEBGIS | JUMLAH KASUS COVID19 KAB. SLEMAN</h2>MATAKULIAH PEMROGRAMAN GEOSPASIAL : WEB";
+                "<h2>LATIHAN WEBGIS | KASUS COVID19 KAB. SLEMAN</h2>MATAKULIAH PEMROGRAMAN GEOSPASIAL : WEB";
         };
         title.addTo(map);
 
@@ -139,8 +170,8 @@
         L.Control.Legend = L.Control.extend({
             onAdd: function (map) {
                 var img = L.DomUtil.create('img');
-                img.src = 'assets/img/legend/legenda.png';
-                img.style.width = '200px';
+                img.src = 'assets/img/legend/legenda4.png';
+                img.style.width = '175px';
                 return img;
             }
         });
@@ -231,53 +262,6 @@
         marker5.addTo(map);
         marker5.bindPopup("Gamping");
 
-        var marker6 = L.marker([-7.7007637, 110.3494447]);
-        marker6.addTo(map);
-        marker6.bindPopup("Sleman");
-
-        var marker7 = L.marker([-7.7594475, 110.4662773]);
-        marker7.addTo(map);
-        marker7.bindPopup("Kalasan");
-
-        var marker8 = L.marker([-7.7626275, 110.4053721]);
-        marker8.addTo(map);
-        marker8.bindPopup("Depok");
-
-        var marker9 = L.marker([-7.7307473, 110.3360782]);
-        marker9.addTo(map);
-        marker9.bindPopup("Mlati");
-
-        var marker10 = L.marker([-7.7134441, 110.3982494]);
-        marker10.addTo(map);
-        marker10.bindPopup("Ngaglik");
-
-        var marker11 = L.marker([-7.6645104, 110.3214837]);
-        marker11.addTo(map);
-        marker11.bindPopup("Tempel");
-
-        var marker12 = L.marker([-7.631973, 110.3765652]);
-        marker12.addTo(map);
-        marker12.bindPopup("Turi");
-
-        var marker13 = L.marker([-7.6267497, 110.4123558]);
-        marker13.addTo(map);
-        marker13.bindPopup("Pakem");
-
-        var marker14 = L.marker([-7.6348042, 110.4454061]);
-        marker14.addTo(map);
-        marker14.bindPopup("Cangkringan");
-
-        var marker15 = L.marker([-7.6941111, 110.457532]);
-        marker15.addTo(map);
-        marker15.bindPopup("Ngemplak");
-
-        var marker16 = L.marker([-7.7976083, 110.5041393]);
-        marker16.addTo(map);
-        marker16.bindPopup("Prambanan");
-
-        var marker17 = L.marker([-7.808019, 110.4448879]);
-        marker17.addTo(map);
-        marker17.bindPopup("Brebah");
 
         /* Judul dan Subjudul */
         var title = new L.Control();
@@ -425,6 +409,7 @@
         }
 
         map.addLayer(markers);
+
     </script>
 
 </body>
